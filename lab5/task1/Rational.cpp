@@ -2,6 +2,7 @@
 #include "Rational.h"
 #include <utility>
 #include <stdexcept>
+#include <cassert>
 
 
 CRational::CRational(int numerator, int denominator)
@@ -35,6 +36,12 @@ void CRational::Normalize()
 	const int gcd = GCD(abs(m_numerator), m_denominator);
 	m_numerator /= gcd;
 	m_denominator /= gcd;
+}
+
+double CRational::ToDouble() const
+{
+	assert(m_denominator != 0);
+	return static_cast<double>(m_numerator) / m_denominator;
 }
 
 unsigned GCD(unsigned a, unsigned b)
