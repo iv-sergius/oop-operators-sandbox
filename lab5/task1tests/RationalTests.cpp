@@ -150,7 +150,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) * (-3)  = (-3/2)
 //	(7*2) / 3     = (14/3)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_binary_multiplication_operation)
+	{
+		VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
+		VerifyRational(CRational(2, 3) * CRational(1, 2), 1, 3);
+		VerifyRational(CRational(1, 2) * (-3), -3, 2);
+		VerifyRational(CRational(11, 4) * 0, 0, 1);
+		VerifyRational(CRational(0, 1) * 0, 0, 1);
+		VerifyRational(CRational(11, 4) * CRational(3, 2) * CRational(2, 7), 33, 28);
+	}
 
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_multiplication_of_on_one)
+	{
+		VerifyRational(CRational(0, 1) * 1, 0, 1);
+		VerifyRational(CRational(16, 3) * 1, 16, 3);
+	}
 
 
 
