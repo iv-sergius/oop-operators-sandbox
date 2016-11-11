@@ -251,6 +251,12 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 			output << CRational(3);
 			BOOST_CHECK_EQUAL(output.str(), "3/1");
 		}
+
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << CRational(6, 2);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
 	}
 
 
