@@ -82,16 +82,18 @@ unsigned LCM(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
-const CRational CRational::operator+=(const CRational & summand)
+const CRational & CRational::operator+=(const CRational & summand)
 {
 	if (summand.GetNumerator() == 0)
 	{
 		return *this;
 	}
 	auto lcm = LCM(GetDenominator(), summand.GetDenominator());
-	auto leftNumerator = GetNumerator() * lcm / summand.GetDenominator();
-	auto rightNumerator = summand.GetNumerator() * lcm / GetDenominator();
-	return CRational(leftNumerator + rightNumerator, lcm);
+	m_numerator = GetNumerator() * (lcm / summand.GetDenominator()) +
+	              summand.GetNumerator() * (lcm / GetDenominator());
+	m_denominator = lcm;
+	Normalize();
+	return *this;
 }
 
 

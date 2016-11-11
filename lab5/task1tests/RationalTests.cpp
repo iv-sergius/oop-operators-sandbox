@@ -132,6 +132,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	{
 		CRational ratNum(3, 1415);
 		VerifyRational(ratNum += ratNum, 6, 1415);
+		VerifyRational(ratNum += ratNum, 12, 1415);
 
 		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
 		VerifyRational(CRational(1, 2) += 1, 3, 2);
