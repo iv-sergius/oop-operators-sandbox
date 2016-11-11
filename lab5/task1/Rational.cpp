@@ -64,6 +64,12 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
+const CRational operator+(const CRational & lhm, const CRational & rhm)
+{
+	int numerator = lhm.GetNumerator() * rhm.GetDenominator() + rhm.GetNumerator() * lhm.GetDenominator();
+	int denominator = lhm.GetDenominator() * rhm.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
