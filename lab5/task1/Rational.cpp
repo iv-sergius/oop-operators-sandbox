@@ -106,7 +106,13 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator*=(const CRational & multiplier)
+{
+	m_numerator *= multiplier.GetNumerator();
+	m_denominator *= multiplier.GetDenominator();
+	Normalize();
+	return *this;
+}
 
 
 
