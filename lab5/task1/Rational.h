@@ -43,6 +43,8 @@ public:
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
+	const CRational operator+() const;
+	const CRational operator-() const;
 
 
 
