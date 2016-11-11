@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <iostream>
 
 /*
 Класс, моделирующий рациональное число
@@ -195,3 +196,5 @@ private:
 
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+
+std::ostream & operator<<(std::ostream &, const CRational &);

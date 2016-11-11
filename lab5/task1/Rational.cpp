@@ -134,6 +134,11 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
 //////////////////////////////////////////////////////////////////////////
+std::ostream & operator<<(std::ostream & stream, const CRational & rat)
+{
+	stream << rat.GetNumerator() << '/' << rat.GetDenominator();
+	return stream;
+}
 
 
 
