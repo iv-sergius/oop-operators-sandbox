@@ -88,6 +88,7 @@ public:
 	// (1/2) -= (1/6)  → (1/3)
 	// (1/2) -= 1      → (-1/2)
 	//////////////////////////////////////////////////////////////////////////
+	const CRational & operator-=(const CRational &);
 
 
 
@@ -195,3 +196,5 @@ private:
 
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+
+unsigned LCM(unsigned a, unsigned b);

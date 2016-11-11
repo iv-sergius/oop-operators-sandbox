@@ -138,6 +138,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 // (1/2) -= (1/6)  → (1/3)
 // (1/2) -= 1      → (-1/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_subtraction_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum -= ratNum, 0, 1);
+
+		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_subtraction_of_to_zero)
+	{
+		VerifyRational(CRational(1, 2) -= 0, 1, 2);
+	}
 
 
 

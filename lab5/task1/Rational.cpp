@@ -3,7 +3,6 @@
 #include <utility>
 #include <stdexcept>
 
-
 CRational::CRational(int numerator, int denominator)
 	: m_numerator(numerator)
 	, m_denominator(denominator)
@@ -47,6 +46,11 @@ unsigned GCD(unsigned a, unsigned b)
 	return (a != 0) ? a : 1;
 }
 
+unsigned LCM(unsigned a, unsigned b)
+{
+	return a * b / GCD(a, b);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // TODO: 1. Реализовать метод ToDouble() согласно заданию
 //////////////////////////////////////////////////////////////////////////
@@ -85,6 +89,19 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
+const CRational & CRational::operator-=(const CRational & subtrahend)
+{
+	if (subtrahend.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), subtrahend.GetDenominator());
+	m_numerator = subtrahend.GetNumerator() * (lcm / GetDenominator()) -
+	              GetNumerator() * (lcm / subtrahend.GetDenominator());
+	m_denominator = lcm;
+	Normalize();
+	return *this;
+}
 
 
 
