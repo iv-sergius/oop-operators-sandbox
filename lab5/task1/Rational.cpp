@@ -127,6 +127,25 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
+const bool operator<(const CRational & lhm, const CRational & rhm)
+{
+	return (lhm.GetNumerator() * rhm.GetDenominator() < rhm.GetNumerator() * lhm.GetDenominator());
+}
+
+const bool operator>(const CRational & lhm, const CRational & rhm)
+{
+	return (lhm.GetNumerator() * rhm.GetDenominator() > rhm.GetNumerator() * lhm.GetDenominator());
+}
+
+const bool operator<=(const CRational & lhm, const CRational & rhm)
+{
+	return !(lhm > rhm);
+}
+
+const bool operator>=(const CRational & lhm, const CRational & rhm)
+{
+	return !(lhm < rhm);
+}
 
 
 
