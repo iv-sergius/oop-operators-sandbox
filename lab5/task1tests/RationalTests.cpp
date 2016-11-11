@@ -163,6 +163,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) ⁄ 5     = (1/10)
 //	7 ⁄ (2/3)     = (21/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_division_operation)
+	{
+		VerifyRational(CRational(1, 2) / CRational(2, 3), 3, 4);
+		VerifyRational(CRational(1, 2) / 5, 1, 10);
+		VerifyRational(0 / CRational(2, 3), 0, 1);
+		VerifyRational(7 / CRational(2, 3), 21, 2);
+		BOOST_REQUIRE_THROW(CRational(2, 3) / 0, std::invalid_argument);
+		BOOST_REQUIRE_THROW(CRational(2, 3) / CRational(0, 1), std::invalid_argument);
+	}
+
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_division_of_on_one)
+	{
+		VerifyRational(CRational(0, 1) / 1, 0, 1);
+		VerifyRational(CRational(2, 3) / 1, 2, 3);
+	}
 
 
 

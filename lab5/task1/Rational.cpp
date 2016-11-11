@@ -99,6 +99,11 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
+const CRational operator/(const CRational & dividend, const CRational & divider)
+{
+	return CRational(dividend.GetNumerator() * divider.GetDenominator(),
+	                 dividend.GetDenominator() * divider.GetNumerator());
+}
 
 
 
