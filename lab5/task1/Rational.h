@@ -137,7 +137,7 @@ public:
 	//	(1/2) /= (2/3) → (3/4)
 	//	(1/2) /= 3     → (1/6)
 	//////////////////////////////////////////////////////////////////////////
-	const CRational & operator/=(const CRational &);
+	const CRational & operator/=(const CRational & divider);
 
 
 
