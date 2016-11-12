@@ -129,13 +129,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 3) + CRational(1, 3) + CRational(1, 3), 1, 1);
 	}
 
-	BOOST_AUTO_TEST_CASE(is_not_changed_when_added_to_zero)
-	{
-		VerifyRational(CRational(1, 2) + 0, 1, 2);
-		VerifyRational(0 + CRational(1, 2), 1, 2);
-	}
-
-
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
@@ -155,17 +148,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 3) - CRational(1, 3) - CRational(1, 3), -1, 3);
 	}
 
-	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_subtraction_of_to_zero)
-	{
-		VerifyRational(CRational(1, 2) - 0, 1, 2);
-	}
-
-	BOOST_AUTO_TEST_CASE(switched_sign_by_the_subtraction_from_zero)
-	{
-		VerifyRational(0 - CRational(1, 2), -1, 2);
-	}
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 // Выполняет увеличение рационального числа на величину второго рационального,
@@ -181,12 +163,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 
 		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
 		VerifyRational(CRational(1, 2) += 1, 3, 2);
-	}
-
-	BOOST_AUTO_TEST_CASE(is_not_changed_by_the_addition_of_zero)
-	{
-		VerifyRational(CRational(1, 2) += 0, 1, 2);
-		VerifyRational(CRational(0, 1) += 0, 0, 1);
 	}
 
 
@@ -207,12 +183,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) -= 1, -1, 2);
 	}
 
-	BOOST_AUTO_TEST_CASE(is_not_changed_by_the_subtraction_of_zero)
-	{
-		VerifyRational(CRational(1, 2) -= 0, 1, 2);
-	}
-
-
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -223,8 +193,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) * (-3)  = (-3/2)
 //	7 * (2/3)     = (14/3)
 //////////////////////////////////////////////////////////////////////////
-
-
+	BOOST_AUTO_TEST_CASE(has_binary_multiplication_operation)
+	{
+		VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
+		VerifyRational(CRational(2, 3) * CRational(1, 2), 1, 3);
+		VerifyRational(CRational(1, 2) * (-3), -3, 2);
+		VerifyRational(CRational(11, 4) * 0, 0, 1);
+		VerifyRational(CRational(0, 1) * 0, 0, 1);
+		VerifyRational(7 * CRational(2, 3), 14, 3);
+		VerifyRational(CRational(11, 4) * CRational(3, 2) * CRational(2, 7), 33, 28);
+	}
 
 
 
