@@ -120,6 +120,19 @@ const CRational & CRational::operator+=(const CRational & summand)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
+const CRational & CRational::operator-=(const CRational & subtrahend)
+{
+	if (subtrahend.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), subtrahend.GetDenominator());
+	m_numerator = subtrahend.GetNumerator() * (lcm / GetDenominator()) -
+	              GetNumerator() * (lcm / subtrahend.GetDenominator());
+	m_denominator = lcm;
+	Normalize();
+	return *this;
+}
 
 
 

@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) += (1/6)  → (2/3)
 //	(1/2) += 1      → (3/2)
 //////////////////////////////////////////////////////////////////////////
-	BOOST_AUTO_TEST_CASE(has_assignment_operator)
+	BOOST_AUTO_TEST_CASE(has_adding_assignment_operator)
 	{
 		CRational ratNum(3, 1415);
 		VerifyRational(ratNum += ratNum, 6, 1415);
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) += 1, 3, 2);
 	}
 
-	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_addition_of_to_zero)
+	BOOST_AUTO_TEST_CASE(is_not_changed_by_the_addition_of_zero)
 	{
 		VerifyRational(CRational(1, 2) += 0, 1, 2);
 		VerifyRational(CRational(0, 1) += 0, 0, 1);
@@ -198,6 +198,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 // (1/2) -= (1/6)  → (1/3)
 // (1/2) -= 1      → (-1/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_subtracting_assignment_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum -= ratNum, 0, 1);
+
+		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(is_not_changed_by_the_subtraction_of_zero)
+	{
+		VerifyRational(CRational(1, 2) -= 0, 1, 2);
+	}
 
 
 
