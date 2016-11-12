@@ -78,6 +78,7 @@ public:
 	//	(1/2) += (1/6)  → (2/3)
 	//	(1/2) += 1      → (3/2)
 	//////////////////////////////////////////////////////////////////////////
+	const CRational & operator+=(const CRational & summand);
 
 
 
@@ -195,6 +196,9 @@ private:
 
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+
+// Вычисляет наименьшее общее кратное (least common multiple) чисел a и b
+unsigned LCM(unsigned a, unsigned b);
 
 const CRational operator+(const CRational & lhs, const CRational & rhs);
 
