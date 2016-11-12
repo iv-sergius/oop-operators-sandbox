@@ -109,40 +109,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //////////////////////////////////////////////////////////////////////////
 	BOOST_AUTO_TEST_CASE(has_unary_plus_that_return_itself)
 	{
-		{
-			const CRational r1(3, 5);
-			CRational r2 = +r1;
-			VerifyRational(r2, 3, 5);
-		}
-
-		{
-			const CRational r1(0, 5);
-			CRational r2 = +r1;
-			VerifyRational(r2, 0, 1);
-		}
+		VerifyRational(+CRational(3, 5), 3, 5);
+		VerifyRational(+CRational(0, 5), 0, 1);
 	}
 
-	BOOST_AUTO_TEST_CASE(has_unary_minus_that_return_reverse_itself)
+	BOOST_AUTO_TEST_CASE(has_unary_minus_that_negates_itself)
 	{
-		{
-			const CRational r1(3, 5);
-			CRational r2 = -r1;
-			VerifyRational(r2, -3, 5);
-		}
-
-		{
-			const CRational r1(-3, -5);
-			CRational r2 = -r1;
-			VerifyRational(r2, -3, 5);
-		}
-
-		{
-			const CRational r1(3, -5);
-			VerifyRational(r1, -3, 5);
-			CRational r2 = -r1;
-			VerifyRational(r2, 3, 5);
-		}
-
+		VerifyRational(-CRational(3, 5), -3, 5);
+		VerifyRational(-CRational(-3, -5), -3, 5);
+		VerifyRational(-CRational(3, -5), 3, 5);
+		VerifyRational(-CRational(-3, 5), 3, 5);
 		{
 			const CRational r1(-0, 5);
 			CRational r2 = -r1;
