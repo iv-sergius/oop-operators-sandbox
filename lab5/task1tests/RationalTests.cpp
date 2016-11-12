@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 3) + CRational(1, 3) + CRational(1, 3), 1, 1);
 	}
 
-	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_addition_of_to_zero)
+	BOOST_AUTO_TEST_CASE(is_not_changed_when_added_to_zero)
 	{
 		VerifyRational(CRational(1, 2) + 0, 1, 2);
 		VerifyRational(0 + CRational(1, 2), 1, 2);
