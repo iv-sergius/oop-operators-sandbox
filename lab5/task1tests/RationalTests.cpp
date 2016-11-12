@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) *= (2/3) → (1/3)
 //	(1/2) *= 3     → (3/2)
 //////////////////////////////////////////////////////////////////////////
-	BOOST_AUTO_TEST_CASE(has_multiplier_operator)
+	BOOST_AUTO_TEST_CASE(has_multiply_assignment_operator)
 	{
 		CRational ratNum(3, 14);
 		VerifyRational(ratNum *= ratNum, 9, 196);
@@ -234,13 +234,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) *= 3, 3, 2);
 		VerifyRational(CRational(3, 14) *= 7, 3, 2);
 	}
-
-	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_multiplication_of_to_one)
-	{
-		VerifyRational(CRational(1, 2) *= 1, 1, 2);
-		VerifyRational(CRational(0, 1) *= 1, 0, 1);
-	}
-
 
 
 
@@ -252,7 +245,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(3/4) /= (3/8) → (2/1)
 //	(1/2) /= 3     → (1/6)
 //////////////////////////////////////////////////////////////////////////
-	BOOST_AUTO_TEST_CASE(has_division_operator)
+	BOOST_AUTO_TEST_CASE(has_division_assignment_operator)
 	{
 		CRational ratNum(2, 3);
 		VerifyRational(ratNum /= ratNum, 1, 1);
@@ -263,10 +256,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_REQUIRE_THROW(CRational(1, 4) /= CRational(0, 1), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_divizion_of_to_one)
-	{
-		VerifyRational(CRational(7, 3) /= 1, 7, 3);
-	}
 
 
 

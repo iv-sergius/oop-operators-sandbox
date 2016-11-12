@@ -5,8 +5,11 @@
 #include <cassert>
 
 CRational::CRational(int numerator, int denominator)
-	: m_numerator(numerator)
-	, m_denominator(denominator)
+{
+	Assign(numerator, denominator);
+}
+
+void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)
 	{
@@ -14,9 +17,11 @@ CRational::CRational(int numerator, int denominator)
 	}
 	if (denominator < 0)
 	{
-		m_numerator = -m_numerator;
-		m_denominator = -m_denominator;
+		numerator = -numerator;
+		denominator = -denominator;
 	}
+	m_numerator = numerator;
+	m_denominator = denominator;
 	Normalize();
 }
 
@@ -108,10 +113,10 @@ const CRational & CRational::operator+=(const CRational & summand)
 		return *this;
 	}
 	auto lcm = LCM(GetDenominator(), summand.GetDenominator());
-	m_numerator = GetNumerator() * (lcm / summand.GetDenominator()) +
-	              summand.GetNumerator() * (lcm / GetDenominator());
-	m_denominator = lcm;
-	Normalize();
+	Assign(
+		GetNumerator() * (lcm / summand.GetDenominator()) +
+			summand.GetNumerator() * (lcm / GetDenominator()),
+		lcm);
 	return *this;
 }
 
@@ -127,10 +132,10 @@ const CRational & CRational::operator-=(const CRational & subtrahend)
 		return *this;
 	}
 	auto lcm = LCM(GetDenominator(), subtrahend.GetDenominator());
-	m_numerator = subtrahend.GetNumerator() * (lcm / GetDenominator()) -
-	              GetNumerator() * (lcm / subtrahend.GetDenominator());
-	m_denominator = lcm;
-	Normalize();
+	Assign(
+		subtrahend.GetNumerator() * (lcm / GetDenominator()) - 
+			GetNumerator() * (lcm / subtrahend.GetDenominator()), 
+		lcm);
 	return *this;
 }
 
@@ -160,9 +165,7 @@ const CRational operator*(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator*=(const CRational & multiplier)
 {
-	m_numerator *= multiplier.GetNumerator();
-	m_denominator *= multiplier.GetDenominator();
-	Normalize();
+	Assign(m_numerator * multiplier.GetNumerator(), m_denominator * multiplier.GetDenominator());
 	return *this;
 }
 
@@ -173,23 +176,9 @@ const CRational & CRational::operator*=(const CRational & multiplier)
 //////////////////////////////////////////////////////////////////////////
 const CRational & CRational::operator/=(const CRational & divider)
 {
-	if (divider.GetNumerator() == 0)
-	{
-		throw std::invalid_argument("Divider must be not a zero");
-	}
-	if (&divider == this)
-	{
-		m_numerator = m_denominator = 1;
-		return *this;
-	}
-	m_numerator *= divider.GetDenominator();
-	m_denominator *= divider.GetNumerator();
-	Normalize();
+	Assign(m_numerator * divider.GetDenominator(), m_denominator * divider.GetNumerator());
 	return *this;
 }
-
-
-
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=

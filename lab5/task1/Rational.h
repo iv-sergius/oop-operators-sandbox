@@ -192,6 +192,7 @@ private:
 	int m_numerator;
 	int m_denominator;
 
+	void Assign(int numerator, int denominator);
 	// Нормализует рациональное число
 	void Normalize();
 };
