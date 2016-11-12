@@ -2,11 +2,14 @@
 #include "Rational.h"
 #include <utility>
 #include <stdexcept>
-
+#include <cassert>
 
 CRational::CRational(int numerator, int denominator)
-	: m_numerator(numerator)
-	, m_denominator(denominator)
+{
+	Assign(numerator, denominator);
+}
+
+void CRational::Assign(int numerator, int denominator)
 {
 	if (denominator == 0)
 	{
@@ -14,9 +17,11 @@ CRational::CRational(int numerator, int denominator)
 	}
 	if (denominator < 0)
 	{
-		m_numerator = -m_numerator;
-		m_denominator = -m_denominator;
+		numerator = -numerator;
+		denominator = -denominator;
 	}
+	m_numerator = numerator;
+	m_denominator = denominator;
 	Normalize();
 }
 
@@ -37,6 +42,12 @@ void CRational::Normalize()
 	m_denominator /= gcd;
 }
 
+double CRational::ToDouble() const
+{
+	assert(m_denominator != 0);
+	return static_cast<double>(m_numerator) / m_denominator;
+}
+
 unsigned GCD(unsigned a, unsigned b)
 {
 	while (b != 0)
@@ -45,6 +56,11 @@ unsigned GCD(unsigned a, unsigned b)
 		b = b % a;
 	}
 	return (a != 0) ? a : 1;
+}
+
+unsigned LCM(unsigned a, unsigned b)
+{
+	return a / GCD(a, b) * b;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -57,6 +73,16 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
 //////////////////////////////////////////////////////////////////////////
+const CRational CRational::operator+() const
+{
+	return *this;
+}
+
+const CRational CRational::operator-() const
+{
+	int k = (m_denominator < 0 || m_denominator < 0) ? +1 : -1;
+	return CRational(k * m_numerator, m_denominator);
+}
 
 
 
@@ -64,6 +90,12 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
+const CRational operator+(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator() + rhs.GetNumerator() * lhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
@@ -71,6 +103,12 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
+const CRational operator-(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator() - rhs.GetNumerator() * lhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
@@ -78,13 +116,38 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator+=(const CRational & summand)
+{
+	if (summand.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), summand.GetDenominator());
+	Assign(
+		GetNumerator() * (lcm / summand.GetDenominator()) +
+			summand.GetNumerator() * (lcm / GetDenominator()),
+		lcm);
+	return *this;
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
+const CRational & CRational::operator-=(const CRational & subtrahend)
+{
+	if (subtrahend.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), subtrahend.GetDenominator());
+	Assign(
+		subtrahend.GetNumerator() * (lcm / GetDenominator()) - 
+			GetNumerator() * (lcm / subtrahend.GetDenominator()), 
+		lcm);
+	return *this;
+}
 
 
 
@@ -92,7 +155,11 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
-
+const CRational operator*(const CRational & lhs, const CRational & rhs)
+{
+	return CRational(lhs.GetNumerator() * rhs.GetNumerator(),
+	                 lhs.GetDenominator() * rhs.GetDenominator());
+}
 
 
 
@@ -106,16 +173,22 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator*=(const CRational & multiplier)
+{
+	Assign(m_numerator * multiplier.GetNumerator(), m_denominator * multiplier.GetDenominator());
+	return *this;
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
-
-
-
+const CRational & CRational::operator/=(const CRational & divider)
+{
+	Assign(m_numerator * divider.GetDenominator(), m_denominator * divider.GetNumerator());
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=
