@@ -195,7 +195,7 @@ private:
 	void Normalize();
 };
 
-// Вычисляет наибольший общий знаменатель чисел a и b
+// Вычисляет наибольший общий делитель (greatest common denominator) чисел a и b
 unsigned GCD(unsigned a, unsigned b);
 
 // Вычисляет наименьшее общее кратное (least common multiple) чисел a и b
