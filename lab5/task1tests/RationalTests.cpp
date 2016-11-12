@@ -15,6 +15,16 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
 
+BOOST_AUTO_TEST_CASE(Test_Least_Common_Multiple)
+{
+	BOOST_CHECK_EQUAL(LCM(2, 3), 6u);
+	BOOST_CHECK_EQUAL(LCM(3, 2), 6u);
+	BOOST_CHECK_EQUAL(LCM(12, 8), 24u);
+	BOOST_CHECK_EQUAL(LCM(8, 12), 24u);
+	BOOST_CHECK_EQUAL(LCM(0, 2), 0u);
+	BOOST_CHECK_EQUAL(LCM(2, 0), 0u);
+	BOOST_CHECK_EQUAL(LCM(0, 0), 0u);
+}
 
 
 /*
@@ -163,6 +173,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) += (1/6)  → (2/3)
 //	(1/2) += 1      → (3/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_assignment_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum += ratNum, 6, 1415);
+		VerifyRational(ratNum += ratNum, 12, 1415);
+
+		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 2) += 1, 3, 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_addition_of_to_zero)
+	{
+		VerifyRational(CRational(1, 2) += 0, 1, 2);
+		VerifyRational(CRational(0, 1) += 0, 0, 1);
+	}
 
 
 
