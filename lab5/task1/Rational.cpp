@@ -158,7 +158,13 @@ const CRational operator*(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator*=(const CRational & multiplier)
+{
+	m_numerator *= multiplier.GetNumerator();
+	m_denominator *= multiplier.GetDenominator();
+	Normalize();
+	return *this;
+}
 
 
 

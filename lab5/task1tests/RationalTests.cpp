@@ -226,7 +226,20 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) *= (2/3) → (1/3)
 //	(1/2) *= 3     → (3/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_multiplier_operator)
+	{
+		CRational ratNum(3, 14);
+		VerifyRational(ratNum *= ratNum, 9, 196);
+		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) *= 3, 3, 2);
+		VerifyRational(CRational(3, 14) *= 7, 3, 2);
+	}
 
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_multiplication_of_to_one)
+	{
+		VerifyRational(CRational(1, 2) *= 1, 1, 2);
+		VerifyRational(CRational(0, 1) *= 1, 0, 1);
+	}
 
 
 
