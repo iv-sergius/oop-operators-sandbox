@@ -92,10 +92,10 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
-const CRational operator*(const CRational & lhm, const CRational & rhm)
+const CRational operator*(const CRational & lhs, const CRational & rhs)
 {
-	return CRational(lhm.GetNumerator() * rhm.GetNumerator(),
-	                 lhm.GetDenominator() * rhm.GetDenominator());
+	return CRational(lhs.GetNumerator() * rhs.GetNumerator(),
+	                 lhs.GetDenominator() * rhs.GetDenominator());
 }
 
 

@@ -195,4 +195,4 @@ private:
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
 
-const CRational operator*(const CRational &, const CRational &);
+const CRational operator*(const CRational & lhs, const CRational & rhs);
