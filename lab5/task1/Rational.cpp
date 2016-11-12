@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <cassert>
 
-
 CRational::CRational(int numerator, int denominator)
 	: m_numerator(numerator)
 	, m_denominator(denominator)
@@ -54,6 +53,11 @@ unsigned GCD(unsigned a, unsigned b)
 	return (a != 0) ? a : 1;
 }
 
+unsigned LCM(unsigned a, unsigned b)
+{
+	return a / GCD(a, b) * b;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // TODO: 1. Реализовать метод ToDouble() согласно заданию
 //////////////////////////////////////////////////////////////////////////
@@ -84,6 +88,12 @@ const CRational operator+(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
+const CRational operator-(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator() - rhs.GetNumerator() * lhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
@@ -91,13 +101,38 @@ const CRational operator+(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
-
+const CRational & CRational::operator+=(const CRational & summand)
+{
+	if (summand.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), summand.GetDenominator());
+	m_numerator = GetNumerator() * (lcm / summand.GetDenominator()) +
+	              summand.GetNumerator() * (lcm / GetDenominator());
+	m_denominator = lcm;
+	Normalize();
+	return *this;
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
+const CRational & CRational::operator-=(const CRational & subtrahend)
+{
+	if (subtrahend.GetNumerator() == 0)
+	{
+		return *this;
+	}
+	auto lcm = LCM(GetDenominator(), subtrahend.GetDenominator());
+	m_numerator = subtrahend.GetNumerator() * (lcm / GetDenominator()) -
+	              GetNumerator() * (lcm / subtrahend.GetDenominator());
+	m_denominator = lcm;
+	Normalize();
+	return *this;
+}
 
 
 
@@ -105,7 +140,11 @@ const CRational operator+(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
-
+const CRational operator*(const CRational & lhs, const CRational & rhs)
+{
+	return CRational(lhs.GetNumerator() * rhs.GetNumerator(),
+	                 lhs.GetDenominator() * rhs.GetDenominator());
+}
 
 
 
