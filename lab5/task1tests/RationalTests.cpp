@@ -239,6 +239,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(3/4) /= (3/8) → (2/1)
 //	(1/2) /= 3     → (1/6)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_division_operator)
+	{
+		CRational ratNum(2, 3);
+		VerifyRational(ratNum /= ratNum, 1, 1);
+		VerifyRational(CRational(2, 3) /= CRational(2, 3), 1, 1);
+		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
+		VerifyRational(CRational(1, 2) /= 3, 1, 6);
+		BOOST_REQUIRE_THROW(CRational(1, 4) /= 0, std::invalid_argument);
+		BOOST_REQUIRE_THROW(CRational(1, 4) /= CRational(0, 1), std::invalid_argument);
+	}
+
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_divizion_of_to_one)
+	{
+		VerifyRational(CRational(7, 3) /= 1, 7, 3);
+	}
 
 
 

@@ -165,6 +165,22 @@ const CRational operator*(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
+const CRational & CRational::operator/=(const CRational & divider)
+{
+	if (divider.GetNumerator() == 0)
+	{
+		throw std::invalid_argument("Divider must be not a zero");
+	}
+	if (&divider == this)
+	{
+		m_numerator = m_denominator = 1;
+		return *this;
+	}
+	m_numerator *= divider.GetDenominator();
+	m_denominator *= divider.GetNumerator();
+	Normalize();
+	return *this;
+}
 
 
 
