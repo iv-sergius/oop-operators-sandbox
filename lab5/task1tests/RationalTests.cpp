@@ -15,6 +15,16 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
 
+BOOST_AUTO_TEST_CASE(Test_Least_Common_Multiple)
+{
+	BOOST_CHECK_EQUAL(LCM(2, 3), 6u);
+	BOOST_CHECK_EQUAL(LCM(3, 2), 6u);
+	BOOST_CHECK_EQUAL(LCM(12, 8), 24u);
+	BOOST_CHECK_EQUAL(LCM(8, 12), 24u);
+	BOOST_CHECK_EQUAL(LCM(0, 2), 0u);
+	BOOST_CHECK_EQUAL(LCM(2, 0), 0u);
+	BOOST_CHECK_EQUAL(LCM(0, 0), 0u);
+}
 
 
 /*
@@ -72,7 +82,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	CRational r(3, 5)
 //	cout << r.ToDouble(); // Должно вывести 0.6
 //////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(rational_can_be_converted_to_double)
+	{
+		CRational r(3, 5);
+		BOOST_CHECK_CLOSE_FRACTION(r.ToDouble(), 0.6, DBL_EPSILON);
+	}
 
 
 
@@ -105,8 +119,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) + 1     = (3/2)
 //	1 + (1/2)     = (3/2)
 //////////////////////////////////////////////////////////////////////////
-
-
+	BOOST_AUTO_TEST_CASE(has_binary_addition_operation)
+	{
+		VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 6) + CRational(1, 2), 2, 3);
+		VerifyRational(CRational(1, 2) + CRational(1, 2), 1, 1);
+		VerifyRational(CRational(1, 2) + 1, 3, 2);
+		VerifyRational(1 + CRational(1, 2), 3, 2);
+		VerifyRational(CRational(1, 3) + CRational(1, 3) + CRational(1, 3), 1, 1);
+	}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -117,9 +138,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) - 1     = (-1/2)
 //	1 - (1/2)     = (1/2)
 //////////////////////////////////////////////////////////////////////////
-
-
-
+	BOOST_AUTO_TEST_CASE(has_binary_subtraction_operation)
+	{
+		VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 6) - CRational(1, 2), -1, 3);
+		VerifyRational(CRational(1, 2) - CRational(1, 2), 0, 1);
+		VerifyRational(CRational(1, 2) - 1, -1, 2);
+		VerifyRational(1 - CRational(1, 2), 1, 2);
+		VerifyRational(CRational(1, 3) - CRational(1, 3) - CRational(1, 3), -1, 3);
+	}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
@@ -128,6 +155,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) += (1/6)  → (2/3)
 //	(1/2) += 1      → (3/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_adding_assignment_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum += ratNum, 6, 1415);
+		VerifyRational(ratNum += ratNum, 12, 1415);
+
+		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 2) += 1, 3, 2);
+	}
 
 
 
@@ -138,7 +174,14 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 // (1/2) -= (1/6)  → (1/3)
 // (1/2) -= 1      → (-1/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_subtracting_assignment_operator)
+	{
+		CRational ratNum(3, 1415);
+		VerifyRational(ratNum -= ratNum, 0, 1);
 
+		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
 
 
 
@@ -148,10 +191,18 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	рационального и целого, либо целого и рационального :
 //	(1/2) * (2/3) = (1/3)
 //	(1/2) * (-3)  = (-3/2)
-//	(7*2) / 3     = (14/3)
+//	7 * (2/3)     = (14/3)
 //////////////////////////////////////////////////////////////////////////
-
-
+	BOOST_AUTO_TEST_CASE(has_binary_multiplication_operation)
+	{
+		VerifyRational(CRational(1, 2) * CRational(2, 3), 1, 3);
+		VerifyRational(CRational(2, 3) * CRational(1, 2), 1, 3);
+		VerifyRational(CRational(1, 2) * (-3), -3, 2);
+		VerifyRational(CRational(11, 4) * 0, 0, 1);
+		VerifyRational(CRational(0, 1) * 0, 0, 1);
+		VerifyRational(7 * CRational(2, 3), 14, 3);
+		VerifyRational(CRational(11, 4) * CRational(3, 2) * CRational(2, 7), 33, 28);
+	}
 
 
 
@@ -175,8 +226,14 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) *= (2/3) → (1/3)
 //	(1/2) *= 3     → (3/2)
 //////////////////////////////////////////////////////////////////////////
-
-
+	BOOST_AUTO_TEST_CASE(has_multiply_assignment_operator)
+	{
+		CRational ratNum(3, 14);
+		VerifyRational(ratNum *= ratNum, 9, 196);
+		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) *= 3, 3, 2);
+		VerifyRational(CRational(3, 14) *= 7, 3, 2);
+	}
 
 
 
@@ -185,8 +242,20 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 // Делит первое рациональное число на другое рациональное, 
 //	либо целое:
 //	(1/2) /= (2/3) → (3/4)
+//	(3/4) /= (3/8) → (2/1)
 //	(1/2) /= 3     → (1/6)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_division_assignment_operator)
+	{
+		CRational ratNum(2, 3);
+		VerifyRational(ratNum /= ratNum, 1, 1);
+		VerifyRational(CRational(2, 3) /= CRational(2, 3), 1, 1);
+		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
+		VerifyRational(CRational(1, 2) /= 3, 1, 6);
+		BOOST_REQUIRE_THROW(CRational(1, 4) /= 0, std::invalid_argument);
+		BOOST_REQUIRE_THROW(CRational(1, 4) /= CRational(0, 1), std::invalid_argument);
+	}
+
 
 
 
