@@ -135,8 +135,25 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) - 1     = (-1/2)
 //	1 - (1/2)     = (1/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_binary_subtraction_operation)
+	{
+		VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 6) - CRational(1, 2), -1, 3);
+		VerifyRational(CRational(1, 2) - CRational(1, 2), 0, 1);
+		VerifyRational(CRational(1, 2) - 1, -1, 2);
+		VerifyRational(1 - CRational(1, 2), 1, 2);
+		VerifyRational(CRational(1, 3) - CRational(1, 3) - CRational(1, 3), -1, 3);
+	}
 
+	BOOST_AUTO_TEST_CASE(does_not_changed_by_the_subtraction_of_to_zero)
+	{
+		VerifyRational(CRational(1, 2) - 0, 1, 2);
+	}
 
+	BOOST_AUTO_TEST_CASE(switched_sign_by_the_subtraction_from_zero)
+	{
+		VerifyRational(0 - CRational(1, 2), -1, 2);
+	}
 
 
 //////////////////////////////////////////////////////////////////////////

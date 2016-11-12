@@ -84,6 +84,12 @@ const CRational operator+(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
+const CRational operator-(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator() - rhs.GetNumerator() * lhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 
