@@ -127,24 +127,24 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
-const bool operator<(const CRational & lhm, const CRational & rhm)
+const bool operator<(const CRational & lhs, const CRational & rhs)
 {
-	return (lhm.GetNumerator() * rhm.GetDenominator() < rhm.GetNumerator() * lhm.GetDenominator());
+	return (lhs.GetNumerator() * rhs.GetDenominator() < rhs.GetNumerator() * lhs.GetDenominator());
 }
 
-const bool operator>(const CRational & lhm, const CRational & rhm)
+const bool operator>(const CRational & lhs, const CRational & rhs)
 {
-	return (lhm.GetNumerator() * rhm.GetDenominator() > rhm.GetNumerator() * lhm.GetDenominator());
+	return (lhs.GetNumerator() * rhs.GetDenominator() > rhs.GetNumerator() * lhs.GetDenominator());
 }
 
-const bool operator<=(const CRational & lhm, const CRational & rhm)
+const bool operator<=(const CRational & lhs, const CRational & rhs)
 {
-	return !(lhm > rhm);
+	return !(lhs > rhs);
 }
 
-const bool operator>=(const CRational & lhm, const CRational & rhm)
+const bool operator>=(const CRational & lhs, const CRational & rhs)
 {
-	return !(lhm < rhm);
+	return !(lhs < rhs);
 }
 
 
