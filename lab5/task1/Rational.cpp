@@ -200,6 +200,25 @@ const CRational & CRational::operator/=(const CRational & divider)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
+const bool operator<(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() < rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator>(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() > rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator<=(const CRational & lhs, const CRational & rhs)
+{
+	return !(lhs > rhs);
+}
+
+const bool operator>=(const CRational & lhs, const CRational & rhs)
+{
+	return !(lhs < rhs);
+}
 
 
 
