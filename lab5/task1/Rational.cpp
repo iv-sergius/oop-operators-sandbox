@@ -73,6 +73,16 @@ unsigned LCM(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
 //////////////////////////////////////////////////////////////////////////
+const CRational CRational::operator+() const
+{
+	return *this;
+}
+
+const CRational CRational::operator-() const
+{
+	int k = (m_denominator < 0 || m_denominator < 0) ? +1 : -1;
+	return CRational(k * m_numerator, m_denominator);
+}
 
 
 
@@ -190,6 +200,25 @@ const CRational & CRational::operator/=(const CRational & divider)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
+const bool operator<(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() < rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator>(const CRational & lhs, const CRational & rhs)
+{
+	return (lhs.GetNumerator() * rhs.GetDenominator() > rhs.GetNumerator() * lhs.GetDenominator());
+}
+
+const bool operator<=(const CRational & lhs, const CRational & rhs)
+{
+	return !(lhs > rhs);
+}
+
+const bool operator>=(const CRational & lhs, const CRational & rhs)
+{
+	return !(lhs < rhs);
+}
 
 
 

@@ -44,6 +44,8 @@ public:
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
+	const CRational operator+() const;
+	const CRational operator-() const;
 
 
 
@@ -209,5 +211,10 @@ const CRational operator+(const CRational & lhs, const CRational & rhs);
 const CRational operator-(const CRational & lhs, const CRational & rhs);
 
 const CRational operator*(const CRational & lhs, const CRational & rhs);
+
+const bool operator<(const CRational & lhs, const CRational & rhs);
+const bool operator>(const CRational & lhs, const CRational & rhs);
+const bool operator<=(const CRational & lhs, const CRational & rhs);
+const bool operator>=(const CRational & lhs, const CRational & rhs);
 
 std::ostream & operator<<(std::ostream & output, const CRational & rat);
