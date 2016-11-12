@@ -197,4 +197,4 @@ private:
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
 
-std::ostream & operator<<(std::ostream &, const CRational &);
+std::ostream & operator<<(std::ostream & output, const CRational & rat);
