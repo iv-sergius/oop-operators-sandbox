@@ -22,7 +22,7 @@ public:
 	//	CRational r(3, 5)
 	//	cout << r.ToDouble(); // Должно вывести 0.6
 	//////////////////////////////////////////////////////////////////////////
-
+	double ToDouble() const;
 
 
 
@@ -196,4 +196,6 @@ private:
 // Вычисляет наибольший общий знаменатель чисел a и b
 unsigned GCD(unsigned a, unsigned b);
 
+
 const CRational operator/(const CRational & dividend, const CRational & divider);
+const CRational operator+(const CRational & lhs, const CRational & rhs);

@@ -2,6 +2,7 @@
 #include "Rational.h"
 #include <utility>
 #include <stdexcept>
+#include <cassert>
 
 
 CRational::CRational(int numerator, int denominator)
@@ -37,6 +38,12 @@ void CRational::Normalize()
 	m_denominator /= gcd;
 }
 
+double CRational::ToDouble() const
+{
+	assert(m_denominator != 0);
+	return static_cast<double>(m_numerator) / m_denominator;
+}
+
 unsigned GCD(unsigned a, unsigned b)
 {
 	while (b != 0)
@@ -64,6 +71,12 @@ unsigned GCD(unsigned a, unsigned b)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
+const CRational operator+(const CRational & lhs, const CRational & rhs)
+{
+	int numerator = lhs.GetNumerator() * rhs.GetDenominator() + rhs.GetNumerator() * lhs.GetDenominator();
+	int denominator = lhs.GetDenominator() * rhs.GetDenominator();
+	return CRational(numerator, denominator);
+}
 
 
 

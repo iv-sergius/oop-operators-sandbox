@@ -72,7 +72,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	CRational r(3, 5)
 //	cout << r.ToDouble(); // Должно вывести 0.6
 //////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(rational_can_be_converted_to_double)
+	{
+		CRational r(3, 5);
+		BOOST_CHECK_CLOSE_FRACTION(r.ToDouble(), 0.6, DBL_EPSILON);
+	}
 
 
 
@@ -105,7 +109,21 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) + 1     = (3/2)
 //	1 + (1/2)     = (3/2)
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_binary_addition_operation)
+	{
+		VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 6) + CRational(1, 2), 2, 3);
+		VerifyRational(CRational(1, 2) + CRational(1, 2), 1, 1);
+		VerifyRational(CRational(1, 2) + 1, 3, 2);
+		VerifyRational(1 + CRational(1, 2), 3, 2);
+		VerifyRational(CRational(1, 3) + CRational(1, 3) + CRational(1, 3), 1, 1);
+	}
 
+	BOOST_AUTO_TEST_CASE(is_not_changed_when_added_to_zero)
+	{
+		VerifyRational(CRational(1, 2) + 0, 1, 2);
+		VerifyRational(0 + CRational(1, 2), 1, 2);
+	}
 
 
 
