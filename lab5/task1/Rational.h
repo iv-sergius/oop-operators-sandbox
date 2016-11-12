@@ -88,7 +88,7 @@ public:
 	// (1/2) -= (1/6)  → (1/3)
 	// (1/2) -= 1      → (-1/2)
 	//////////////////////////////////////////////////////////////////////////
-	const CRational & operator-=(const CRational &);
+	const CRational & operator-=(const CRational & subtrahend);
 
 
 
