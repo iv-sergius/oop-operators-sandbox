@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <iostream>
 
 /*
 Класс, моделирующий рациональное число
@@ -205,6 +206,7 @@ unsigned GCD(unsigned a, unsigned b);
 // Вычисляет наименьшее общее кратное (least common multiple) чисел a и b
 unsigned LCM(unsigned a, unsigned b);
 
+const CRational operator/(const CRational & dividend, const CRational & divider);
 const CRational operator+(const CRational & lhs, const CRational & rhs);
 
 const CRational operator-(const CRational & lhs, const CRational & rhs);
@@ -215,6 +217,8 @@ const bool operator<(const CRational & lhs, const CRational & rhs);
 const bool operator>(const CRational & lhs, const CRational & rhs);
 const bool operator<=(const CRational & lhs, const CRational & rhs);
 const bool operator>=(const CRational & lhs, const CRational & rhs);
+
+std::ostream & operator<<(std::ostream & output, const CRational & rat);
 
 const bool operator != (const CRational & firstNumber, const CRational & secondNumber);
 const bool operator == (const CRational & firstNumber, const CRational & secondNumber);
