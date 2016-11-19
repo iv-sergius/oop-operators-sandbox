@@ -205,6 +205,7 @@ unsigned GCD(unsigned a, unsigned b);
 // Вычисляет наименьшее общее кратное (least common multiple) чисел a и b
 unsigned LCM(unsigned a, unsigned b);
 
+const CRational operator/(const CRational & dividend, const CRational & divider);
 const CRational operator+(const CRational & lhs, const CRational & rhs);
 
 const CRational operator-(const CRational & lhs, const CRational & rhs);
