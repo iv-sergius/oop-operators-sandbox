@@ -218,4 +218,7 @@ const bool operator>(const CRational & lhs, const CRational & rhs);
 const bool operator<=(const CRational & lhs, const CRational & rhs);
 const bool operator>=(const CRational & lhs, const CRational & rhs);
 
-std::ostream & operator<<(std::ostream & output, const CRational & rat);
+std::ostream & operator<<(std::ostream & output, const CRational & value);
+
+const bool operator != (const CRational & lhs, const CRational & rhs);
+const bool operator == (const CRational & lhs, const CRational & rhs);
