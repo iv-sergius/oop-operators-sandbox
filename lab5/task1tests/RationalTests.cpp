@@ -375,6 +375,38 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	std::ostream в формате <числитель>/<знаменатель>, 
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(can_be_printed_to_ostream)
+	{
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << CRational(7, 15);
+			BOOST_CHECK_EQUAL(output.str(), "7/15");
+		}
+
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << "Lorem ipsum " << CRational(-1, 2) << " dolor sit amet";
+			BOOST_CHECK_EQUAL(output.str(), "Lorem ipsum -1/2 dolor sit amet");
+		}
+
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << CRational(3, 1);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
+
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << CRational(3);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
+
+		{
+			std::ostringstream output(std::ios_base::out);
+			output << CRational(6, 2);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
+	}
 
 
 
