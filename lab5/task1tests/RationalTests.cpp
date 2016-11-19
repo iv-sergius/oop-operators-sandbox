@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "../task1/Rational.h"
+#include <iosfwd>
 
 BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 {
@@ -375,6 +376,26 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	std::ostream в формате <числитель>/<знаменатель>, 
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(can_be_printed_to_ostream)
+	{
+		{
+			std::ostringstream output;
+			output << CRational(7, 15);
+			BOOST_CHECK_EQUAL(output.str(), "7/15");
+		}
+
+		{
+			std::ostringstream output;
+			output << "Lorem ipsum " << CRational(-1, 2) << " dolor sit amet";
+			BOOST_CHECK_EQUAL(output.str(), "Lorem ipsum -1/2 dolor sit amet");
+		}
+
+		{
+			std::ostringstream output;
+			output << CRational(3);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
+	}
 
 
 
