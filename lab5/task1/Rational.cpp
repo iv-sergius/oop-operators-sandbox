@@ -166,6 +166,11 @@ const CRational operator*(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
+const CRational operator/(const CRational & dividend, const CRational & divider)
+{
+	return CRational(dividend.GetNumerator() * divider.GetDenominator(),
+	                 dividend.GetDenominator() * divider.GetNumerator());
+}
 
 
 
