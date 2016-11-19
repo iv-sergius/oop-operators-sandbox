@@ -306,24 +306,23 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	(1/2) != 7     → true
 //	3 != (2/3)     → true
 //////////////////////////////////////////////////////////////////////////
-
-BOOST_AUTO_TEST_CASE(can_be_compare_equality)
-{
-	BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
-	BOOST_CHECK(CRational(1, 3) == CRational(2, 6));
-	BOOST_CHECK(CRational(4, 1) == 4);
-	BOOST_CHECK(3 == CRational(3, 1));
-	BOOST_CHECK(!(CRational(1, 2) == CRational(2, 3)));
-	BOOST_CHECK(!(CRational(1, 2) == 7));
-	BOOST_CHECK(!(3 == CRational(2, 3)));
-	BOOST_CHECK(!(CRational(1, 2) != CRational(1, 2)));
-	BOOST_CHECK(!(CRational(1, 3) != CRational(2, 6)));
-	BOOST_CHECK(!(CRational(4, 1) != 4));
-	BOOST_CHECK(!(3 != CRational(3, 1)));
-	BOOST_CHECK(CRational(1, 2) != CRational(2, 3));
-	BOOST_CHECK(CRational(1, 2) != 7);
-	BOOST_CHECK(3 != CRational(2, 3));
-}
+	BOOST_AUTO_TEST_CASE(can_be_compared_for_equality)
+	{
+		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
+		BOOST_CHECK(CRational(1, 3) == CRational(2, 6));
+		BOOST_CHECK(CRational(4, 1) == 4);
+		BOOST_CHECK(3 == CRational(3, 1));
+		BOOST_CHECK(!(CRational(1, 2) == CRational(2, 3)));
+		BOOST_CHECK(!(CRational(1, 2) == 7));
+		BOOST_CHECK(!(3 == CRational(2, 3)));
+		BOOST_CHECK(!(CRational(1, 2) != CRational(1, 2)));
+		BOOST_CHECK(!(CRational(1, 3) != CRational(2, 6)));
+		BOOST_CHECK(!(CRational(4, 1) != 4));
+		BOOST_CHECK(!(3 != CRational(3, 1)));
+		BOOST_CHECK(CRational(1, 2) != CRational(2, 3));
+		BOOST_CHECK(CRational(1, 2) != 7);
+		BOOST_CHECK(3 != CRational(2, 3));
+	}
 
 
 //////////////////////////////////////////////////////////////////////////

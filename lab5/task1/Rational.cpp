@@ -198,15 +198,16 @@ const CRational & CRational::operator/=(const CRational & divider)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=
 //////////////////////////////////////////////////////////////////////////
-const bool operator == (const CRational & firstNumber, const CRational & secondNumber)
+const bool operator == (const CRational & lhs, const CRational & rhs)
 {
-	return (firstNumber.GetNumerator() == secondNumber.GetNumerator() &&
-		firstNumber.GetDenominator() == secondNumber.GetDenominator());
+	return (lhs.GetNumerator() == rhs.GetNumerator() &&
+		lhs.GetDenominator() == rhs.GetDenominator());
 }
-const bool operator != (const CRational & firstNumber, const CRational & secondNumber)
+
+const bool operator != (const CRational & lhs, const CRational & rhs)
 {
-	return (firstNumber.GetNumerator() != secondNumber.GetNumerator() ||
-		firstNumber.GetDenominator() != secondNumber.GetDenominator());
+	return (lhs.GetNumerator() != rhs.GetNumerator() ||
+		lhs.GetDenominator() != rhs.GetDenominator());
 }
 
 
@@ -240,9 +241,9 @@ const bool operator>=(const CRational & lhs, const CRational & rhs)
 //////////////////////////////////////////////////////////////////////////
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
 //////////////////////////////////////////////////////////////////////////
-std::ostream & operator<<(std::ostream & output, const CRational & rat)
+std::ostream & operator<<(std::ostream & output, const CRational & value)
 {
-	output << rat.GetNumerator() << '/' << rat.GetDenominator();
+	output << value.GetNumerator() << '/' << value.GetDenominator();
 	return output;
 }
 
