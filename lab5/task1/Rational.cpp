@@ -30,6 +30,11 @@ int CRational::GetDenominator() const
 	return m_denominator;
 }
 
+double CRational::ToDouble() const
+{
+	return m_numerator / static_cast<double>(m_denominator);
+}
+
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);

@@ -73,9 +73,24 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	cout << r.ToDouble(); // Должно вывести 0.6
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(ToDouble_function)
+	
+		BOOST_AUTO_TEST_CASE(work_for_0)
+		{
+			BOOST_CHECK_CLOSE_FRACTION(CRational(0, 1).ToDouble(), 0.0, DBL_EPSILON);
+		}
+		BOOST_AUTO_TEST_CASE(work_for_finite_fraction)
+		{
+			BOOST_CHECK_CLOSE_FRACTION(CRational(3, 5).ToDouble(), 0.6, DBL_EPSILON);
+			BOOST_CHECK_CLOSE_FRACTION(CRational(-4, 25).ToDouble(), -0.16, DBL_EPSILON);
+		}
+		BOOST_AUTO_TEST_CASE(work_for_unfinite_fraction)
+		{
+			BOOST_CHECK_CLOSE_FRACTION(CRational(1, 3).ToDouble(), 1.0 / 3.0, DBL_EPSILON);
+			BOOST_CHECK_CLOSE_FRACTION(CRational(-11, 7).ToDouble(), - 11.0 / 7.0, DBL_EPSILON);
+		}
 
-
-
+	BOOST_AUTO_TEST_SUITE_END()
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
 // Указание: см. материалы к лекции
