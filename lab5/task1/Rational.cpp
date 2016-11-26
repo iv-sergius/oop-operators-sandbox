@@ -2,6 +2,7 @@
 #include "Rational.h"
 #include <utility>
 #include <stdexcept>
+#include <limits>
 
 
 CRational::CRational(int numerator, int denominator)
@@ -63,7 +64,19 @@ unsigned GCD(unsigned a, unsigned b)
 // TODO: 2. Реализовать унарный + и унарный -
 //////////////////////////////////////////////////////////////////////////
 
+CRational const CRational::operator +() const
+{
+	return CRational(m_numerator, m_denominator);
+}
 
+CRational const CRational::operator -() const
+{
+	if (m_numerator == std::numeric_limits<int>::min())
+	{
+		throw(std::out_of_range("Numenator out of range of int type"));
+	}
+	return CRational(-m_numerator, m_denominator);
+}
 
 
 //////////////////////////////////////////////////////////////////////////

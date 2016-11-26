@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "../task1/Rational.h"
+#include <limits>
 
 BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 {
@@ -109,8 +110,32 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	+someRational = someOtherRational;
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Unary_plus_operator)
 
+		BOOST_AUTO_TEST_CASE(gives_the_same_number)
+		{
+			const CRational rational(3, 5);
+			CRational rationalUnaryPlus = + rational; // r2 также равно 3/5
+			VerifyRational(rationalUnaryPlus, 3, 5);
+		}
 
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(Unary_minus_operator)
+
+		BOOST_AUTO_TEST_CASE(gives_the_additive_inverse)
+		{
+			const CRational rational(3, 5);
+			CRational rationalUnaryMinus = - rational; // r3 равно -3/5
+			VerifyRational(rationalUnaryMinus, -3, 5);
+		}
+		BOOST_AUTO_TEST_CASE(throw_exeption_if_numerator_has_minimum_possible_value)
+		{
+			const CRational minRational(std::numeric_limits<int>::min());
+			BOOST_REQUIRE_THROW( (-minRational), std::out_of_range );
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
