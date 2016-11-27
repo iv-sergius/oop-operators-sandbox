@@ -99,7 +99,18 @@ CRational const CRational::operator +(CRational const& rational2) const
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
 
+CRational const CRational::operator -(CRational const& rational2) const
+{
+	int denominatorsGCD = GCD(m_denominator, rational2.m_denominator);
+	// overflow
+	int newDenominator = m_denominator / denominatorsGCD * rational2.m_denominator;
+	// overflow
+	int newNumenator = m_numerator * (rational2.m_denominator / denominatorsGCD)
+		- rational2.m_numerator * (m_denominator / denominatorsGCD);
 
+	CRational subRational = CRational(newNumenator, newDenominator);
+	return subRational;
+}
 
 
 //////////////////////////////////////////////////////////////////////////
