@@ -31,6 +31,11 @@ void VerifyRational(const CRational & r, int expectedNumerator, int expectedDeno
 	BOOST_CHECK_EQUAL(r.GetNumerator(), expectedNumerator);
 	BOOST_CHECK_EQUAL(r.GetDenominator(), expectedDenominator);
 }
+void VerifyRational(const CRational & r, const CRational & expectedR)
+{
+	BOOST_CHECK_EQUAL(r.GetNumerator(), expectedR.GetNumerator());
+	BOOST_CHECK_EQUAL(r.GetDenominator(), expectedR.GetDenominator());
+}
 
 BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(is_0_by_default)
@@ -161,7 +166,7 @@ static const int MININT = std::numeric_limits<int>::min();
 			}
 			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
 			{
-				VerifyRational(CRational(1, MAXINT / 6 * 2) + CRational(1, MAXINT / 6 * 3), 5, MAXINT / 6 * 6);
+				VerifyRational(CRational(1, MAXINT / 6 * 2) + CRational(1, MAXINT / 6 * 3), CRational(5, MAXINT / 6 * 6));
 				VerifyRational(CRational(MAXINT - 1, MAXINT) + CRational(1, MAXINT), 1, 1);
 				VerifyRational(CRational(MININT, MAXINT) + CRational(1, 1), -1, MAXINT);
 			}
