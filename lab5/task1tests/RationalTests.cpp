@@ -146,7 +146,28 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 //	1 + (1/2)     = (3/2)
 //////////////////////////////////////////////////////////////////////////
 
+static const int MAXINT = std::numeric_limits<int>::max();
+static const int MININT = std::numeric_limits<int>::min();
 
+	BOOST_AUTO_TEST_SUITE(Two_arguments_plus_operator)
+
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
+
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);//	(1/2) + (1/6) = (2/3)
+				VerifyRational(CRational(1, 2) + CRational(1), 3, 2);	//	(1/2) + 1     = (3/2)
+				VerifyRational(CRational(1) + CRational(1, 2), 3, 2);	//	1 + (1/2)     = (3/2)
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				VerifyRational(CRational(1, MAXINT / 6 * 2) + CRational(1, MAXINT / 6 * 3), 5, MAXINT / 6 * 6);
+				VerifyRational(CRational(MAXINT - 1, MAXINT) + CRational(1, MAXINT), 1, 1);
+				VerifyRational(CRational(MININT, MAXINT) + CRational(1, 1), -1, MAXINT);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 
 //////////////////////////////////////////////////////////////////////////
