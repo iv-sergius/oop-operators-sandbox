@@ -31,11 +31,6 @@ int CRational::GetDenominator() const
 	return m_denominator;
 }
 
-double CRational::ToDouble() const
-{
-	return m_numerator / static_cast<double>(m_denominator);
-}
-
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);
@@ -57,8 +52,10 @@ unsigned GCD(unsigned a, unsigned b)
 // TODO: 1. Реализовать метод ToDouble() согласно заданию
 //////////////////////////////////////////////////////////////////////////
 
-
-
+double CRational::ToDouble() const
+{
+	return m_numerator / static_cast<double>(m_denominator);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
@@ -66,7 +63,7 @@ unsigned GCD(unsigned a, unsigned b)
 
 CRational const CRational::operator +() const
 {
-	return CRational(m_numerator, m_denominator);
+	return *this;
 }
 
 CRational const CRational::operator -() const
@@ -219,29 +216,124 @@ CRational const operator /(int integer, CRational const& rational)
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
 
-
-
+CRational& CRational::operator *=(CRational const& rational2)
+{
+	*this = *this * rational2;
+	return *this;
+}
+CRational& CRational::operator *=(int integer)
+{
+	*this = *this * integer;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
 
-
-
-
+CRational& CRational::operator /=(CRational const& rational2)
+{
+	*this = *this / rational2;
+	return *this;
+}
+CRational& CRational::operator /=(int integer)
+{
+	*this = *this / integer;
+	return *this;
+}
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=
 //////////////////////////////////////////////////////////////////////////
 
+bool CRational::operator ==(CRational const& rational2) const
+{
+	return m_numerator == rational2.m_numerator && m_denominator == rational2.m_denominator;
+}
 
+bool operator ==(CRational const& rational, int integer)
+{
+	return rational == CRational(integer);
+}
 
+bool operator ==(int integer, CRational const& rational)
+{
+	return CRational(integer) == rational;
+}
+
+bool CRational::operator !=(CRational const& rational2) const
+{
+	return m_numerator != rational2.m_numerator || m_denominator != rational2.m_denominator;
+}
+
+bool operator !=(CRational const& rational, int integer)
+{
+	return rational != CRational(integer);
+}
+
+bool operator !=(int integer, CRational const& rational)
+{
+	return CRational(integer) != rational;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
 
+bool CRational::operator <(CRational const& rational2) const
+{
+	CRational difference = *this - rational2;
+	return difference.m_numerator < 0;
+}
+bool operator <(CRational const& rational, int integer)
+{
+	return rational < CRational(integer);
+}
+bool operator <(int integer, CRational const& rational)
+{
+	return CRational(integer) < rational;
+}
 
+bool CRational::operator >(CRational const& rational2) const
+{
+	CRational difference = *this - rational2;
+	return difference.m_numerator > 0;
+}
+bool operator >(CRational const& rational, int integer)
+{
+	return rational > CRational(integer);
+}
+bool operator >(int integer, CRational const& rational)
+{
+	return CRational(integer) > rational;
+}
 
+bool CRational::operator <=(CRational const& rational2) const
+{
+	CRational difference = *this - rational2;
+	return difference.m_numerator <= 0;
+}
+bool operator <=(CRational const& rational, int integer)
+{
+	return rational <= CRational(integer);
+}
+bool operator <=(int integer, CRational const& rational)
+{
+	return CRational(integer) <= rational;
+}
+
+bool CRational::operator >=(CRational const& rational2) const
+{
+	CRational difference = *this - rational2;
+	return difference.m_numerator >= 0;
+}
+bool operator >=(CRational const& rational, int integer)
+{
+	return rational >= CRational(integer);
+}
+bool operator >=(int integer, CRational const& rational)
+{
+	return CRational(integer) >= rational;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 

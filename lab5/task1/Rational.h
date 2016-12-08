@@ -25,7 +25,6 @@ public:
 
 	double ToDouble() const;
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 2. Реализовать унарный + и унарный -
 	// Указание: см. материалы к лекции
@@ -120,9 +119,8 @@ public:
 	//	(1/2) *= 3     → (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
-
+	CRational& operator *=(CRational const& rational2);
+	CRational& operator *=(int integer);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 10. Реализовать оператор /=
@@ -132,8 +130,8 @@ public:
 	//	(1/2) /= 3     → (1/6)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
+	CRational& operator /=(CRational const& rational2);
+	CRational& operator /=(int integer);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 11. Реализовать операторы == и !=
@@ -147,8 +145,8 @@ public:
 	//	3 != (2/3)     → true
 	//////////////////////////////////////////////////////////////////////////
 
-
-
+	bool operator ==(CRational const& rational2) const;
+	bool operator !=(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 12. Реализовать операторы <, >, <=, >=
@@ -162,8 +160,10 @@ public:
 	//	3 >= (8/2)     → false
 	//////////////////////////////////////////////////////////////////////////
 
-
-
+	bool operator <(CRational const& rational2) const;
+	bool operator >(CRational const& rational2) const;
+	bool operator <=(CRational const& rational2) const;
+	bool operator >=(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
@@ -191,7 +191,7 @@ private:
 unsigned GCD(unsigned a, unsigned b);
 
 
-
+// Operators declared outside of the class CRational
 
 CRational const operator +(CRational const& rational, int integer);
 CRational const operator +(int integer, CRational const& rational);
@@ -204,3 +204,18 @@ CRational const operator *(int integer, CRational const& rational);
 
 CRational const operator /(CRational const& rational, int integer);
 CRational const operator /(int integer, CRational const& rational);
+
+
+bool operator ==(CRational const& rational, int integer);
+bool operator ==(int integer, CRational const& rational);
+bool operator !=(CRational const& rational, int integer);
+bool operator !=(int integer, CRational const& rational);
+
+bool operator <(CRational const& rational, int integer);
+bool operator <(int integer, CRational const& rational);
+bool operator >(CRational const& rational, int integer);
+bool operator >(int integer, CRational const& rational);
+bool operator <=(CRational const& rational, int integer);
+bool operator <=(int integer, CRational const& rational);
+bool operator >=(CRational const& rational, int integer);
+bool operator >=(int integer, CRational const& rational);

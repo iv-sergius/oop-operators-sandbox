@@ -282,25 +282,25 @@ static const int MININT = std::numeric_limits<int>::min();
 //	7 * (2/3)     = (14/3)
 //////////////////////////////////////////////////////////////////////////
 
-BOOST_AUTO_TEST_SUITE(Two_arguments_product_operator)
+	BOOST_AUTO_TEST_SUITE(Two_arguments_multiplicate_operator)
 
-	BOOST_AUTO_TEST_SUITE(give_correct_value)
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
 
-		BOOST_AUTO_TEST_CASE(for_simple_rational)
-		{
-			VerifyRational(CRational(1, 2) * CRational(1, 3), 1, 6);
-			VerifyRational(CRational(1, 3) * -3, -1, 1);
-			VerifyRational(7 * CRational(2, 3), 14, 3);
-		}
-		BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
-		{
-			int bigOdd = MAXINT / 2;
-			int bigEven = bigOdd - 1;
-			VerifyRational(CRational(bigEven, 2 * bigOdd) * CRational(bigOdd, 2 * bigEven), 1, 4);
-		}
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				VerifyRational(CRational(1, 2) * CRational(1, 3), 1, 6);
+				VerifyRational(CRational(1, 3) * -3, -1, 1);
+				VerifyRational(7 * CRational(2, 3), 14, 3);
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				int bigOdd = MAXINT / 2;
+				int bigEven = bigOdd - 1;
+				VerifyRational(CRational(bigEven, 2 * bigOdd) * CRational(bigOdd, 2 * bigEven), 1, 4);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+
 	BOOST_AUTO_TEST_SUITE_END()
-
-BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
@@ -345,9 +345,30 @@ BOOST_AUTO_TEST_SUITE_END()
 //	(1/2) *= 3     → (3/2)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Appropriating_multiplicate_operator)
 
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
 
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				CRational rational = CRational(1, 2);
+				rational *= CRational(2, 3);
+				VerifyRational(rational, 1, 3);
+				rational *= -2;
+				VerifyRational(rational, -2, 3);
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				int bigOdd = MAXINT / 2;
+				int bigEven = bigOdd - 1;
+				CRational rational = CRational(bigEven, 2 * bigOdd);
+				rational *= CRational(bigOdd, 2 * bigEven);
+				VerifyRational(rational, 1, 4);
+			}
 
+		BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
@@ -358,8 +379,36 @@ BOOST_AUTO_TEST_SUITE_END()
 //	(1/2) /= 3     → (1/6)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Appropriating_devide_operator)
 
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
 
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				CRational rational = CRational(1, 2);
+				rational /= CRational(2, 3);
+				VerifyRational(rational, 3, 4);
+				rational /= -3;
+				VerifyRational(rational, -1, 4);
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				int bigOdd = MAXINT / 2;
+				int bigEven = bigOdd - 1;
+				CRational rational = CRational(bigEven, 2 * bigOdd);
+				rational /= CRational(2 * bigEven, bigOdd);
+				VerifyRational(rational, 1, 4);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
+
+		BOOST_AUTO_TEST_CASE(throw_if_devide_on_zero)
+		{
+			CRational rational = CRational(1, 2);
+			BOOST_REQUIRE_THROW(rational /= CRational(0, 1), std::invalid_argument);
+			BOOST_REQUIRE_THROW(rational /= 0, std::invalid_argument);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=
@@ -373,8 +422,31 @@ BOOST_AUTO_TEST_SUITE_END()
 //	3 != (2/3)     → true
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Equality_operator)
 
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) == CRational(-2, -4), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) == CRational(2, 2), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) == CRational(1, 1), false);
+			BOOST_CHECK_EQUAL(CRational(4, -1) == -4, true);
+			BOOST_CHECK_EQUAL(3 == CRational(3, 1), true);
+		}
 
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(Inequality_operator)
+
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) != CRational(-2, -4), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) != CRational(2, 2), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) != CRational(1, 1), true);
+			BOOST_CHECK_EQUAL(CRational(4, -1) != 4, true);
+			BOOST_CHECK_EQUAL(3 != CRational(3, 2), true);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
@@ -388,8 +460,85 @@ BOOST_AUTO_TEST_SUITE_END()
 //	3 >= (8/2)     → false
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Less_operator)
 
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) < CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) < CRational(2, 3), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) < CRational(1, 3), false);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) < CRational(-1, 2), false);
+			BOOST_CHECK_EQUAL(CRational(1, -2) < CRational(-2, 3), false);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) < CRational(-1, 3), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) < 1, true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) < 0, false);
+			BOOST_CHECK_EQUAL(CRational(1, 1) < 1, false);
+			BOOST_CHECK_EQUAL(0 < CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(1 < CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(1 < CRational(1, 1), false);
+		}
 
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(More_operator)
+
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) > CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) > CRational(2, 3), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) > CRational(1, 3), true);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) > CRational(-1, 2), false);
+			BOOST_CHECK_EQUAL(CRational(1, -2) > CRational(-2, 3), true);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) > CRational(-1, 3), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) > 1, false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) > 0, true);
+			BOOST_CHECK_EQUAL(CRational(1, 1) > 1, false);
+			BOOST_CHECK_EQUAL(0 > CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(1 > CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(1 > CRational(1, 1), false);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(Less_or_equal_operator)
+
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) <= CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) <= CRational(2, 3), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) <= CRational(1, 3), false);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) <= CRational(1, -2), true);
+			BOOST_CHECK_EQUAL(CRational(1, -2) <= CRational(-2, 3), false);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) <= CRational(-1, 3), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) <= 1, true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) <= 0, false);
+			BOOST_CHECK_EQUAL(CRational(1, 1) <= 1, true);
+			BOOST_CHECK_EQUAL(0 <= CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(1 <= CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(1 <= CRational(1, 1), true);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(More_or_equal_operator)
+
+		BOOST_AUTO_TEST_CASE(give_correct_value)
+		{
+			BOOST_CHECK_EQUAL(CRational(1, 2) >= CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(CRational(1, 2) >= CRational(2, 3), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) >= CRational(1, 3), true);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) >= CRational(1, -2), true);
+			BOOST_CHECK_EQUAL(CRational(1, -2) >= CRational(-2, 3), true);
+			BOOST_CHECK_EQUAL(CRational(-1, 2) >= CRational(-1, 3), false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) >= 1, false);
+			BOOST_CHECK_EQUAL(CRational(1, 2) >= 0, true);
+			BOOST_CHECK_EQUAL(CRational(1, 1) >= 1, true);
+			BOOST_CHECK_EQUAL(0 >= CRational(1, 2), false);
+			BOOST_CHECK_EQUAL(1 >= CRational(1, 2), true);
+			BOOST_CHECK_EQUAL(1 >= CRational(1, 1), true);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
