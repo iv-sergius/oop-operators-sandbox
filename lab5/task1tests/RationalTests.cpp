@@ -16,8 +16,6 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
 
-
-
 /*
   Рациональное число:
 	равно нулю по умолчанию (0/1)
@@ -68,9 +66,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_REQUIRE_THROW(CRational(1, 0), std::invalid_argument);
 	}
 
-
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 1. Реализовать метод ToDouble() согласно заданию
 // Возвращает отношение числителя и знаменателя в виде числа double
@@ -97,6 +92,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		}
 
 	BOOST_AUTO_TEST_SUITE_END()
+
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
 // Указание: см. материалы к лекции
@@ -204,7 +200,6 @@ static const int MININT = std::numeric_limits<int>::min();
 
 	BOOST_AUTO_TEST_SUITE_END()
 
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 // Выполняет увеличение рационального числа на величину второго рационального,
@@ -238,7 +233,6 @@ static const int MININT = std::numeric_limits<int>::min();
 		BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE_END()
-
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
