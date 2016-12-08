@@ -91,8 +91,18 @@ CRational const CRational::operator +(CRational const& rational2) const
 	int newNumenator = m_numerator * (rational2.m_denominator / denominatorsGCD)
 		+ rational2.m_numerator * (m_denominator / denominatorsGCD);
 
-	CRational sumRational = CRational(newNumenator, newDenominator);
-	return sumRational;
+	CRational resultRational = CRational(newNumenator, newDenominator);
+	return resultRational;
+}
+
+CRational const operator +(CRational const& rational, int integer)
+{
+	return rational + CRational(integer, 1);
+}
+
+CRational const operator +(int integer, CRational const& rational)
+{
+	return CRational(integer, 1) + rational;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -108,39 +118,103 @@ CRational const CRational::operator -(CRational const& rational2) const
 	int newNumenator = m_numerator * (rational2.m_denominator / denominatorsGCD)
 		- rational2.m_numerator * (m_denominator / denominatorsGCD);
 
-	CRational subRational = CRational(newNumenator, newDenominator);
-	return subRational;
+	CRational resultRational = CRational(newNumenator, newDenominator);
+	return resultRational;
 }
 
+CRational const operator -(CRational const& rational, int integer)
+{
+	return rational - CRational(integer, 1);
+}
+
+CRational const operator -(int integer, CRational const& rational)
+{
+	return CRational(integer, 1) - rational;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
 
-
-
+CRational& CRational::operator +=(CRational const& rational2)
+{
+	*this = *this + rational2;
+	return *this;
+}
+CRational& CRational::operator +=(int integer)
+{
+	*this = *this + integer;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
 
-
-
+CRational& CRational::operator -=(CRational const& rational2)
+{
+	*this = *this - rational2;
+	return *this;
+}
+CRational& CRational::operator -=(int integer)
+{
+	*this = *this - integer;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
 
+CRational const CRational::operator *(CRational const& rational2) const
+{
+	int numerator1denominator2GCD = GCD(m_numerator, rational2.m_denominator);
+	int denominator1numerator2GCD = GCD(m_denominator, rational2.m_numerator);
+	// overflow
+	int newDenominator = (m_denominator / denominator1numerator2GCD) 
+		* (rational2.m_denominator / numerator1denominator2GCD);
+	// overflow
+	int newNumenator = (m_numerator / numerator1denominator2GCD) * (rational2.m_numerator / denominator1numerator2GCD);
 
+	CRational resultRational = CRational(newNumenator, newDenominator);
+	return resultRational;
+}
 
+CRational const operator *(CRational const& rational, int integer)
+{
+	return rational * CRational(integer, 1);
+}
 
+CRational const operator *(int integer, CRational const& rational)
+{
+	return CRational(integer, 1) * rational;
+}
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
 
+CRational const CRational::operator /(CRational const& rational2) const
+{
+	int numeratorsGCD = GCD(m_numerator, rational2.m_numerator);
+	int denominatorsGCD = GCD(m_denominator, rational2.m_denominator);
+	// overflow
+	int newDenominator = (m_denominator / denominatorsGCD) * (rational2.m_numerator / numeratorsGCD);
+	// overflow
+	int newNumenator = (m_numerator / numeratorsGCD) * (rational2.m_denominator / denominatorsGCD);
 
+	CRational resultRational = CRational(newNumenator, newDenominator);
+	return resultRational;
+}
 
+CRational const operator /(CRational const& rational, int integer)
+{
+	return rational / CRational(integer, 1);
+}
 
+CRational const operator /(int integer, CRational const& rational)
+{
+	return CRational(integer, 1) / rational;
+}
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////

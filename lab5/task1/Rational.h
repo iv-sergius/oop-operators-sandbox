@@ -58,7 +58,6 @@ public:
 
 	CRational const operator +(CRational const& rational2) const;
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 4. Реализовать бинарный -
 	// Возвращает разность двух рациональных чисел, 
@@ -70,7 +69,6 @@ public:
 
 	CRational const operator -(CRational const& rational2) const;
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 5. Реализовать оператор +=
 	// Выполняет увеличение рационального числа на величину второго рационального,
@@ -79,8 +77,8 @@ public:
 	//	(1/2) += 1      → (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
+	CRational& operator +=(CRational const& rational2);
+	CRational& operator +=(int integer);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 6. Реализовать оператор -=
@@ -89,8 +87,8 @@ public:
 	// (1/2) -= 1      → (-1/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
+	CRational& operator -=(CRational const& rational2);
+	CRational& operator -=(int integer);
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 7. Реализовать оператор *
@@ -101,9 +99,7 @@ public:
 	//	(7*2) / 3     = (14/3)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
-
+	CRational const operator *(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 8. Реализовать оператор /
@@ -114,9 +110,7 @@ public:
 	//	7 ⁄ (2/3)     = (21/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
-
-
+	CRational const operator /(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 9. Реализовать оператор *=
@@ -195,3 +189,18 @@ private:
 
 // Вычисляет наибольший общий делитель (greatest common denominator) чисел a и b
 unsigned GCD(unsigned a, unsigned b);
+
+
+
+
+CRational const operator +(CRational const& rational, int integer);
+CRational const operator +(int integer, CRational const& rational);
+
+CRational const operator -(CRational const& rational, int integer);
+CRational const operator -(int integer, CRational const& rational);
+
+CRational const operator *(CRational const& rational, int integer);
+CRational const operator *(int integer, CRational const& rational);
+
+CRational const operator /(CRational const& rational, int integer);
+CRational const operator /(int integer, CRational const& rational);

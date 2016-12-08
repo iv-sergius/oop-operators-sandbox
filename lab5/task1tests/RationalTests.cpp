@@ -134,11 +134,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 			CRational rationalUnaryMinus = - rational; // r3 равно -3/5
 			VerifyRational(rationalUnaryMinus, -3, 5);
 		}
-		BOOST_AUTO_TEST_CASE(throw_exeption_if_numerator_has_minimum_possible_value)
-		{
-			const CRational minRational(std::numeric_limits<int>::min());
-			BOOST_REQUIRE_THROW( (-minRational), std::out_of_range );
-		}
+		//BOOST_AUTO_TEST_CASE(throw_exeption_if_numerator_has_minimum_possible_value)
+		//{
+		//	const CRational minRational(std::numeric_limits<int>::min());
+		//	BOOST_REQUIRE_THROW( (-minRational), std::out_of_range );
+		//}
 
 	BOOST_AUTO_TEST_SUITE_END()
 
@@ -161,8 +161,8 @@ static const int MININT = std::numeric_limits<int>::min();
 			BOOST_AUTO_TEST_CASE(for_simple_rational)
 			{
 				VerifyRational(CRational(1, 2) + CRational(1, 6), 2, 3);//	(1/2) + (1/6) = (2/3)
-				VerifyRational(CRational(1, 2) + CRational(1), 3, 2);	//	(1/2) + 1     = (3/2)
-				VerifyRational(CRational(1) + CRational(1, 2), 3, 2);	//	1 + (1/2)     = (3/2)
+				VerifyRational(CRational(1, 2) + 1, 3, 2);	//	(1/2) + 1     = (3/2)
+				VerifyRational(1 + CRational(1, 2), 3, 2);	//	1 + (1/2)     = (3/2)
 			}
 			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
 			{
@@ -190,9 +190,9 @@ static const int MININT = std::numeric_limits<int>::min();
 
 			BOOST_AUTO_TEST_CASE(for_simple_rational)
 			{
-				VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);//	(1/2) + (1/6) = (2/3)
-				VerifyRational(CRational(1, 2) - CRational(1), -1, 2);	//	(1/2) + 1     = (3/2)
-				VerifyRational(CRational(1) - CRational(1, 2), 1, 2);	//	1 + (1/2)     = (3/2)
+				VerifyRational(CRational(1, 2) - CRational(1, 6), 1, 3);//	(1/2) - (1/6) = (1/3)
+				VerifyRational(CRational(1, 2) - 1, -1, 2);	//	(1/2) - 1     = - (1/2)
+				VerifyRational(1 - CRational(1, 2), 1, 2);	//	1 - (1/2)     = (1/2)
 			}
 			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
 			{
@@ -213,7 +213,31 @@ static const int MININT = std::numeric_limits<int>::min();
 //	(1/2) += 1      → (3/2)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Appropriating_plus_operator)
 
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
+
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				CRational rational = CRational(1, 2);
+				rational += CRational(1, 6);
+				VerifyRational(rational, 2, 3);//	(1/2) + (1/6) = (2/3)
+				rational += 1;
+				VerifyRational(rational, 5, 3);	//	(2/3) + 1     = (5/3)
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				CRational rational = CRational(1, MAXINT / 6 * 2);
+				rational += CRational(1, MAXINT / 6 * 3);
+				VerifyRational(rational, CRational(5, MAXINT / 6 * 6));
+				rational = CRational(-1, MAXINT);
+				rational += 1;
+				VerifyRational(rational, MAXINT - 1, MAXINT);
+			}
+
+		BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -223,8 +247,31 @@ static const int MININT = std::numeric_limits<int>::min();
 // (1/2) -= 1      → (-1/2)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Appropriating_minus_operator)
 
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
 
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				CRational rational = CRational(1, 2);
+				rational -= CRational(1, 6);
+				VerifyRational(rational, 1, 3);
+				rational -= 1;
+				VerifyRational(rational, -2, 3);
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				CRational rational = CRational(1, MAXINT / 6 * 2);
+				rational -= CRational(1, MAXINT / 6 * 3);
+				VerifyRational(rational, 1, MAXINT / 6 * 6);
+				rational = CRational(MAXINT - 1, MAXINT);
+				rational -= 1;
+				VerifyRational(rational, -1, MAXINT);
+			}
+
+		BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
@@ -235,9 +282,25 @@ static const int MININT = std::numeric_limits<int>::min();
 //	7 * (2/3)     = (14/3)
 //////////////////////////////////////////////////////////////////////////
 
+BOOST_AUTO_TEST_SUITE(Two_arguments_product_operator)
 
+	BOOST_AUTO_TEST_SUITE(give_correct_value)
 
+		BOOST_AUTO_TEST_CASE(for_simple_rational)
+		{
+			VerifyRational(CRational(1, 2) * CRational(1, 3), 1, 6);
+			VerifyRational(CRational(1, 3) * -3, -1, 1);
+			VerifyRational(7 * CRational(2, 3), 14, 3);
+		}
+		BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+		{
+			int bigOdd = MAXINT / 2;
+			int bigEven = bigOdd - 1;
+			VerifyRational(CRational(bigEven, 2 * bigOdd) * CRational(bigOdd, 2 * bigEven), 1, 4);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
@@ -248,9 +311,31 @@ static const int MININT = std::numeric_limits<int>::min();
 //	7 ⁄ (2/3)     = (21/2)
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Two_arguments_devide_operator)
 
+		BOOST_AUTO_TEST_SUITE(give_correct_value)
 
+			BOOST_AUTO_TEST_CASE(for_simple_rational)
+			{
+				VerifyRational(CRational(1, 2) / CRational(2, 3), 3, 4);
+				VerifyRational(CRational(1, 2) / 5, 1, 10);
+				VerifyRational(7 / CRational(2, 3), 21, 2);
+			}
+			BOOST_AUTO_TEST_CASE(for_close_to_limits_values)
+			{
+				int bigOdd = MAXINT / 2;
+				int bigEven = bigOdd - 1;
+				VerifyRational(CRational(bigEven, 2 * bigOdd) / CRational(2 * bigEven, bigOdd), 1, 4);
+			}
+		BOOST_AUTO_TEST_SUITE_END()
 
+		BOOST_AUTO_TEST_CASE(throw_if_devide_on_zero)
+		{
+			BOOST_REQUIRE_THROW(CRational(1, 2) / CRational(0, 1), std::invalid_argument);
+			BOOST_REQUIRE_THROW(CRational(1, 2) / 0, std::invalid_argument);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
