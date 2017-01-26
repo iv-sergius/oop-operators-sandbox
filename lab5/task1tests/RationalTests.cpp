@@ -540,8 +540,23 @@ static const int MININT = std::numeric_limits<int>::min();
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Output_to_stream_operator)
 
+		BOOST_AUTO_TEST_CASE(out_correct_value)
+		{
+			CRational rational;
+			std::ostringstream stringStrm;
+			stringStrm << rational;
+			BOOST_CHECK_EQUAL(stringStrm.str(), "0/1");
+			rational = CRational(-5, 6);
+			// stringStrm = std::ostringstream(); // some fun
+			stringStrm.str("");
+			stringStrm.clear();
+			stringStrm << rational;
+			BOOST_CHECK_EQUAL(stringStrm.str(), "-5/6");
+		}
 
+	BOOST_AUTO_TEST_SUITE_END()
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 14. Реализовать оператор ввода рационального числа из входного потока 
@@ -549,6 +564,52 @@ static const int MININT = std::numeric_limits<int>::min();
 //	например: 7/15
 //////////////////////////////////////////////////////////////////////////
 
+	BOOST_AUTO_TEST_SUITE(Input_from_stream_operator)
 
+		BOOST_AUTO_TEST_CASE(out_correct_value)
+		{
+			CRational rational;
+			std::istringstream inStringStrm("-5/6.");
+			inStringStrm >> rational;
+			VerifyRational(rational, -5, 6);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), '.');
+		}
+		BOOST_AUTO_TEST_CASE(do_not_change_value_on_errors)
+		{
+			CRational rational;
+			std::istringstream inStringStrm("q5/6");
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+			inStringStrm.str("5q/6");
+			inStringStrm.clear();
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+			inStringStrm.str("5/q6");
+			inStringStrm.clear();
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+			inStringStrm.str("5/c");
+			inStringStrm.clear();
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+			inStringStrm.str("5 /6");
+			inStringStrm.clear();
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+/*
+			inStringStrm.str("5/ 6");
+			inStringStrm.clear();
+			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
+			VerifyRational(rational, 0, 1);
+			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
+*/
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -249,12 +249,27 @@ bool const operator >=(CRational const& rational1, CRational const& rational2)
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
 //////////////////////////////////////////////////////////////////////////
 
-
-
-
+std::ostream & operator<<(std::ostream & strm, const CRational & rational)
+{
+	strm << rational.GetNumerator() << '/' << rational.GetDenominator();
+	return strm;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 14. Реализовать оператор ввода рационального числа из входного потока 
 //////////////////////////////////////////////////////////////////////////
 
+std::istream & operator >> (std::istream & strm, CRational & rational)
+{
+	int numerator, denominator;
+	if ((strm >> numerator) && (strm.get() == '/') && (strm >> denominator))
+	{
+		rational = CRational(numerator, denominator);
+	}
+	else
+	{
+		strm.setstate(std::ios_base::failbit);
+	}
+	return strm;
+}
 
