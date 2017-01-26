@@ -79,54 +79,34 @@ CRational const CRational::operator -() const
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
 
-CRational const CRational::operator +(CRational const& rational2) const
+CRational const operator +(CRational const& rational1, CRational const& rational2)
 {
-	int denominatorsGCD = GCD(m_denominator, rational2.m_denominator);
+	int denominatorsGCD = GCD(rational1.GetDenominator(), rational2.GetDenominator());
 	// overflow
-	int newDenominator = m_denominator / denominatorsGCD * rational2.m_denominator;
+	int newDenominator = rational1.GetDenominator() / denominatorsGCD * rational2.GetDenominator();
 	// overflow
-	int newNumenator = m_numerator * (rational2.m_denominator / denominatorsGCD)
-		+ rational2.m_numerator * (m_denominator / denominatorsGCD);
+	int newNumenator = rational1.GetNumerator() * (rational2.GetDenominator() / denominatorsGCD)
+		+ rational2.GetNumerator() * (rational1.GetDenominator() / denominatorsGCD);
 
 	CRational resultRational = CRational(newNumenator, newDenominator);
 	return resultRational;
-}
-
-CRational const operator +(CRational const& rational, int integer)
-{
-	return rational + CRational(integer, 1);
-}
-
-CRational const operator +(int integer, CRational const& rational)
-{
-	return CRational(integer, 1) + rational;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
 
-CRational const CRational::operator -(CRational const& rational2) const
+CRational const operator -(CRational const& rational1, CRational const& rational2)
 {
-	int denominatorsGCD = GCD(m_denominator, rational2.m_denominator);
+	int denominatorsGCD = GCD(rational1.GetDenominator(), rational2.GetDenominator());
 	// overflow
-	int newDenominator = m_denominator / denominatorsGCD * rational2.m_denominator;
+	int newDenominator = rational1.GetDenominator() / denominatorsGCD * rational2.GetDenominator();
 	// overflow
-	int newNumenator = m_numerator * (rational2.m_denominator / denominatorsGCD)
-		- rational2.m_numerator * (m_denominator / denominatorsGCD);
+	int newNumenator = rational1.GetNumerator() * (rational2.GetDenominator() / denominatorsGCD)
+		- rational2.GetNumerator() * (rational1.GetDenominator() / denominatorsGCD);
 
 	CRational resultRational = CRational(newNumenator, newDenominator);
 	return resultRational;
-}
-
-CRational const operator -(CRational const& rational, int integer)
-{
-	return rational - CRational(integer, 1);
-}
-
-CRational const operator -(int integer, CRational const& rational)
-{
-	return CRational(integer, 1) - rational;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -163,55 +143,37 @@ CRational& CRational::operator -=(int integer)
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
 
-CRational const CRational::operator *(CRational const& rational2) const
+CRational const operator *(CRational const& rational1, CRational const& rational2)
 {
-	int numerator1denominator2GCD = GCD(m_numerator, rational2.m_denominator);
-	int denominator1numerator2GCD = GCD(m_denominator, rational2.m_numerator);
+	int numerator1denominator2GCD = GCD(rational1.GetNumerator(), rational2.GetDenominator());
+	int denominator1numerator2GCD = GCD(rational1.GetDenominator(), rational2.GetNumerator());
 	// overflow
-	int newDenominator = (m_denominator / denominator1numerator2GCD) 
-		* (rational2.m_denominator / numerator1denominator2GCD);
+	int newDenominator = (rational1.GetDenominator() / denominator1numerator2GCD)
+		* (rational2.GetDenominator() / numerator1denominator2GCD);
 	// overflow
-	int newNumenator = (m_numerator / numerator1denominator2GCD) * (rational2.m_numerator / denominator1numerator2GCD);
+	int newNumenator = (rational1.GetNumerator() / numerator1denominator2GCD) * (rational2.GetNumerator() / denominator1numerator2GCD);
 
 	CRational resultRational = CRational(newNumenator, newDenominator);
 	return resultRational;
 }
 
-CRational const operator *(CRational const& rational, int integer)
-{
-	return rational * CRational(integer, 1);
-}
-
-CRational const operator *(int integer, CRational const& rational)
-{
-	return CRational(integer, 1) * rational;
-}
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
 
-CRational const CRational::operator /(CRational const& rational2) const
+CRational const operator /(CRational const& rational1, CRational const& rational2)
 {
-	int numeratorsGCD = GCD(m_numerator, rational2.m_numerator);
-	int denominatorsGCD = GCD(m_denominator, rational2.m_denominator);
+	int numeratorsGCD = GCD(rational1.GetNumerator(), rational2.GetNumerator());
+	int denominatorsGCD = GCD(rational1.GetDenominator(), rational2.GetDenominator());
 	// overflow
-	int newDenominator = (m_denominator / denominatorsGCD) * (rational2.m_numerator / numeratorsGCD);
+	int newDenominator = (rational1.GetDenominator() / denominatorsGCD) * (rational2.GetNumerator() / numeratorsGCD);
 	// overflow
-	int newNumenator = (m_numerator / numeratorsGCD) * (rational2.m_denominator / denominatorsGCD);
+	int newNumenator = (rational1.GetNumerator() / numeratorsGCD) * (rational2.GetDenominator() / denominatorsGCD);
 
 	CRational resultRational = CRational(newNumenator, newDenominator);
 	return resultRational;
 }
 
-CRational const operator /(CRational const& rational, int integer)
-{
-	return rational / CRational(integer, 1);
-}
-
-CRational const operator /(int integer, CRational const& rational)
-{
-	return CRational(integer, 1) / rational;
-}
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
@@ -245,94 +207,42 @@ CRational& CRational::operator /=(int integer)
 // TODO: 11. Реализовать операторы == и !=
 //////////////////////////////////////////////////////////////////////////
 
-bool CRational::operator ==(CRational const& rational2) const
+bool const operator ==(CRational const& rational1, CRational const& rational2)
 {
-	return m_numerator == rational2.m_numerator && m_denominator == rational2.m_denominator;
+	return rational1.GetNumerator() == rational2.GetNumerator() && rational1.GetDenominator() == rational2.GetDenominator();
 }
 
-bool operator ==(CRational const& rational, int integer)
+bool const operator !=(CRational const& rational1, CRational const& rational2)
 {
-	return rational == CRational(integer);
-}
-
-bool operator ==(int integer, CRational const& rational)
-{
-	return CRational(integer) == rational;
-}
-
-bool CRational::operator !=(CRational const& rational2) const
-{
-	return m_numerator != rational2.m_numerator || m_denominator != rational2.m_denominator;
-}
-
-bool operator !=(CRational const& rational, int integer)
-{
-	return rational != CRational(integer);
-}
-
-bool operator !=(int integer, CRational const& rational)
-{
-	return CRational(integer) != rational;
+	return rational1.GetNumerator() != rational2.GetNumerator() || rational1.GetDenominator() != rational2.GetDenominator();
 }
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
 
-bool CRational::operator <(CRational const& rational2) const
+bool const operator <(CRational const& rational1, CRational const& rational2)
 {
-	CRational difference = *this - rational2;
-	return difference.m_numerator < 0;
-}
-bool operator <(CRational const& rational, int integer)
-{
-	return rational < CRational(integer);
-}
-bool operator <(int integer, CRational const& rational)
-{
-	return CRational(integer) < rational;
+	CRational difference = rational1 - rational2;
+	return difference.GetNumerator() < 0;
 }
 
-bool CRational::operator >(CRational const& rational2) const
+bool const operator >(CRational const& rational1, CRational const& rational2)
 {
-	CRational difference = *this - rational2;
-	return difference.m_numerator > 0;
-}
-bool operator >(CRational const& rational, int integer)
-{
-	return rational > CRational(integer);
-}
-bool operator >(int integer, CRational const& rational)
-{
-	return CRational(integer) > rational;
+	CRational difference = rational1 - rational2;
+	return difference.GetNumerator() > 0;
 }
 
-bool CRational::operator <=(CRational const& rational2) const
+bool const operator <=(CRational const& rational1, CRational const& rational2)
 {
-	CRational difference = *this - rational2;
-	return difference.m_numerator <= 0;
-}
-bool operator <=(CRational const& rational, int integer)
-{
-	return rational <= CRational(integer);
-}
-bool operator <=(int integer, CRational const& rational)
-{
-	return CRational(integer) <= rational;
+	CRational difference = rational1 - rational2;
+	return difference.GetNumerator() <= 0;
 }
 
-bool CRational::operator >=(CRational const& rational2) const
+bool const operator >=(CRational const& rational1, CRational const& rational2)
 {
-	CRational difference = *this - rational2;
-	return difference.m_numerator >= 0;
-}
-bool operator >=(CRational const& rational, int integer)
-{
-	return rational >= CRational(integer);
-}
-bool operator >=(int integer, CRational const& rational)
-{
-	return CRational(integer) >= rational;
+	CRational difference = rational1 - rational2;
+	return difference.GetNumerator() >= 0;
 }
 
 //////////////////////////////////////////////////////////////////////////

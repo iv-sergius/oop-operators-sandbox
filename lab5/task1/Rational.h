@@ -55,7 +55,6 @@ public:
 	//	1 + (1/2)     = (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-	CRational const operator +(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 4. Реализовать бинарный -
@@ -66,7 +65,6 @@ public:
 	//	1 - (1/2)     = (1/2)
 	//////////////////////////////////////////////////////////////////////////
 
-	CRational const operator -(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 5. Реализовать оператор +=
@@ -98,7 +96,6 @@ public:
 	//	(7*2) / 3     = (14/3)
 	//////////////////////////////////////////////////////////////////////////
 
-	CRational const operator *(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 8. Реализовать оператор /
@@ -109,7 +106,6 @@ public:
 	//	7 ⁄ (2/3)     = (21/2)
 	//////////////////////////////////////////////////////////////////////////
 
-	CRational const operator /(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 9. Реализовать оператор *=
@@ -145,8 +141,6 @@ public:
 	//	3 != (2/3)     → true
 	//////////////////////////////////////////////////////////////////////////
 
-	bool operator ==(CRational const& rational2) const;
-	bool operator !=(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 12. Реализовать операторы <, >, <=, >=
@@ -160,10 +154,6 @@ public:
 	//	3 >= (8/2)     → false
 	//////////////////////////////////////////////////////////////////////////
 
-	bool operator <(CRational const& rational2) const;
-	bool operator >(CRational const& rational2) const;
-	bool operator <=(CRational const& rational2) const;
-	bool operator >=(CRational const& rational2) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
@@ -193,29 +183,14 @@ unsigned GCD(unsigned a, unsigned b);
 
 // Operators declared outside of the class CRational
 
-CRational const operator +(CRational const& rational, int integer);
-CRational const operator +(int integer, CRational const& rational);
+CRational const operator +(CRational const& rational1, CRational const& rational2);
+CRational const operator -(CRational const& rational1, CRational const& rational2);
+CRational const operator *(CRational const& rational1, CRational const& rational2);
+CRational const operator /(CRational const& rational1, CRational const& rational2);
 
-CRational const operator -(CRational const& rational, int integer);
-CRational const operator -(int integer, CRational const& rational);
-
-CRational const operator *(CRational const& rational, int integer);
-CRational const operator *(int integer, CRational const& rational);
-
-CRational const operator /(CRational const& rational, int integer);
-CRational const operator /(int integer, CRational const& rational);
-
-
-bool operator ==(CRational const& rational, int integer);
-bool operator ==(int integer, CRational const& rational);
-bool operator !=(CRational const& rational, int integer);
-bool operator !=(int integer, CRational const& rational);
-
-bool operator <(CRational const& rational, int integer);
-bool operator <(int integer, CRational const& rational);
-bool operator >(CRational const& rational, int integer);
-bool operator >(int integer, CRational const& rational);
-bool operator <=(CRational const& rational, int integer);
-bool operator <=(int integer, CRational const& rational);
-bool operator >=(CRational const& rational, int integer);
-bool operator >=(int integer, CRational const& rational);
+bool const operator ==(CRational const& rational1, CRational const& rational2);
+bool const operator !=(CRational const& rational1, CRational const& rational2);
+bool const operator <(CRational const& rational1, CRational const& rational2);
+bool const operator >(CRational const& rational1, CRational const& rational2);
+bool const operator <=(CRational const& rational1, CRational const& rational2);
+bool const operator >=(CRational const& rational1, CRational const& rational2);
