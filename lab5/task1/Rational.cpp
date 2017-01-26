@@ -31,6 +31,13 @@ int CRational::GetDenominator() const
 	return m_denominator;
 }
 
+std::pair<int, CRational> CRational::ToCompoundFraction() const
+{
+	int integralPart = m_numerator / m_denominator;
+	CRational fractionalPart(m_numerator % m_denominator, m_denominator);
+	return std::pair<int, CRational>(integralPart, fractionalPart);
+}
+
 void CRational::Normalize()
 {
 	const int gcd = GCD(abs(m_numerator), m_denominator);

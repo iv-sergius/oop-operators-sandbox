@@ -601,7 +601,7 @@ static const int MININT = std::numeric_limits<int>::min();
 			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
 			VerifyRational(rational, 0, 1);
 			BOOST_CHECK_EQUAL(inStringStrm.get(), -1);
-/*
+/* // problem with space
 			inStringStrm.str("5/ 6");
 			inStringStrm.clear();
 			BOOST_CHECK_EQUAL((bool)(inStringStrm >> rational), false);
@@ -610,6 +610,20 @@ static const int MININT = std::numeric_limits<int>::min();
 */
 		}
 
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_SUITE(ToCompoundFraction_method)
+		BOOST_AUTO_TEST_CASE(give_correct_pair)
+		{
+			CRational rational(9, 4);
+			auto compoundFraction = rational.ToCompoundFraction();
+			BOOST_CHECK_EQUAL(compoundFraction.first, 2);
+			VerifyRational(compoundFraction.second, 1, 4);
+			rational = CRational(-9, 4);
+			compoundFraction = rational.ToCompoundFraction();
+			BOOST_CHECK_EQUAL(compoundFraction.first, -2);
+			VerifyRational(compoundFraction.second, -1, 4);
+		}
 	BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

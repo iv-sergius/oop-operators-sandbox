@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <utility>
 
 /*
 Класс, моделирующий рациональное число
@@ -169,6 +170,9 @@ public:
 	//	std::istream в формате <числитель>/<знаменатель>, 
 	//	например: 7/15
 	//////////////////////////////////////////////////////////////////////////
+
+	std::pair<int, CRational> ToCompoundFraction()const;
+
 private:
 	int m_numerator;
 	int m_denominator;
